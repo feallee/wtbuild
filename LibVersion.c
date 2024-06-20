@@ -46,10 +46,22 @@ bool LibVersion_Get(uint16_t id, uint16_t* major, uint16_t* minor, uint16_t* pat
 		{
 			if (record.Id == id)
 			{
+				if (++record.Patch > 999)
+				{
+					record.Patch = 0;
+					if (++record.Minor > 999)
+					{
+						record.Minor = 0;
+						if (++record.Major > 999)
+						{
+							record.Major = 1;
+						}
+					}
+				}
+
 				*major = record.Major;
 				*minor = record.Minor;
 				*patch = record.Patch;
-				record.Patch++;
 				fseek(fp, sizeof(LibVersion_RecordType) * -1, SEEK_CUR);
 				fwrite(&record, sizeof(LibVersion_RecordType), 1, fp);
 				f = 0;

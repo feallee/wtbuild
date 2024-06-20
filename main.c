@@ -75,22 +75,6 @@ int main(int argc, char* argv[])
 		FILE* fp = fopen(argv[1], "w+");
 		uint16_t ma = 1, mi = 0, pa = 0, id = atoi(argv[2]);
 		LibVersion_Get(id, &ma, &mi, &pa);
-		pa++;
-		if (pa > 999)
-		{
-			pa = 0;
-			mi++;
-		}
-		if (mi > 999)
-		{
-			mi = 0;
-			ma++;
-		}
-		if (ma > 999)
-		{
-			ma = 0;
-		}
-
 		fprintf(fp, CONTEXT,
 			LibTime_GetDigit(info.tm_year, 4),
 			LibTime_GetDigit(info.tm_year, 3),
