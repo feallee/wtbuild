@@ -30,51 +30,14 @@
 
 
 int main(int argc, char* argv[])
-{
-	struct tm info;
-	LibTime_Now(&info);
-	if (argc == 2)
-	{
+{	
+	if (argc > 1)
+	{	
+		uint16_t ma = 1, mi = 0, pa = 0;				
+		struct tm info;
 		FILE* fp = fopen(argv[1], "w+");
-
-		fprintf(fp, CONTEXT,
-			LibTime_GetDigit(info.tm_year, 4),
-			LibTime_GetDigit(info.tm_year, 3),
-			LibTime_GetDigit(info.tm_year, 2),
-			LibTime_GetDigit(info.tm_year, 1),
-			LibTime_GetDigit(info.tm_mon, 2),
-			LibTime_GetDigit(info.tm_mon, 1),
-			LibTime_GetDigit(info.tm_mday, 2),
-			LibTime_GetDigit(info.tm_mday, 1),
-			LibTime_GetDigit(info.tm_hour, 2),
-			LibTime_GetDigit(info.tm_hour, 1),
-			LibTime_GetDigit(info.tm_min, 2),
-			LibTime_GetDigit(info.tm_min, 1),
-			LibTime_GetDigit(info.tm_sec, 2),
-			LibTime_GetDigit(info.tm_sec, 1),
-			1, 0, 0);
-		fclose(fp);
-		printf("%d%d%d%d/%d%d/%d%d %d%d:%d%d:%d%d\n",
-			LibTime_GetDigit(info.tm_year, 4),
-			LibTime_GetDigit(info.tm_year, 3),
-			LibTime_GetDigit(info.tm_year, 2),
-			LibTime_GetDigit(info.tm_year, 1),
-			LibTime_GetDigit(info.tm_mon, 2),
-			LibTime_GetDigit(info.tm_mon, 1),
-			LibTime_GetDigit(info.tm_mday, 2),
-			LibTime_GetDigit(info.tm_mday, 1),
-			LibTime_GetDigit(info.tm_hour, 2),
-			LibTime_GetDigit(info.tm_hour, 1),
-			LibTime_GetDigit(info.tm_min, 2),
-			LibTime_GetDigit(info.tm_min, 1),
-			LibTime_GetDigit(info.tm_sec, 2),
-			LibTime_GetDigit(info.tm_sec, 1));
-	}
-	else if (argc > 2)
-	{
-		FILE* fp = fopen(argv[1], "w+");
-		uint16_t ma = 1, mi = 0, pa = 0, id = atoi(argv[2]);
-		LibVersion_Get(id, &ma, &mi, &pa);
+		LibTime_Now(&info);
+		LibVersion_Get(&ma, &mi, &pa);
 		fprintf(fp, CONTEXT,
 			LibTime_GetDigit(info.tm_year, 4),
 			LibTime_GetDigit(info.tm_year, 3),
@@ -111,9 +74,8 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
-		printf("ERROR\n");
+		printf("syntax:wtbuild <file.h>\n");
 	}
-
 	return 0;
 }
 
